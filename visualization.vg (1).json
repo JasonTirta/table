@@ -1,0 +1,93 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "title": "Several Causes of Tsunami between 1995-2020",
+  "width": 250,
+  "height": 250,
+  "signals": [
+    {
+      "name": "endAngle",
+      "value": 6.29,
+      "bind": {"input": "range", "min": 6.29, "max": 6.29, "step": 0.01}
+    },
+    {
+      "name": "innerRadius",
+      "value": 0,
+      "bind": {"input": "range", "min": 80, "max": 90, "step": 1}
+    },
+    {"name": "sort", "value": false, "bind": {"input": "checkbox"}}
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"id": 1, "field": 215, "startAngle": 0, "endAngle": 4.390746753246753},
+        {
+          "id": 2,
+          "field": 11,
+          "startAngle": 4.390746753246753,
+          "endAngle": 4.61538961038961
+        },
+        {
+          "id": 3,
+          "field": 3,
+          "startAngle": 4.61538961038961,
+          "endAngle": 4.676655844155844
+        },
+        {
+          "id": 4,
+          "field": 1,
+          "startAngle": 4.676655844155844,
+          "endAngle": 4.697077922077922
+        },
+        {
+          "id": 5,
+          "field": 48,
+          "startAngle": 4.697077922077922,
+          "endAngle": 5.677337662337662
+        },
+        {
+          "id": 6,
+          "field": 30,
+          "startAngle": 5.677337662337662,
+          "endAngle": 6.289999999999999
+        }
+      ],
+      "transform": [
+        {
+          "type": "pie",
+          "field": "field",
+          "endAngle": {"signal": "endAngle"},
+          "sort": {"signal": "sort"}
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "id"},
+      "range": {"scheme": "category20"}
+    }
+  ],
+  "marks": [
+    {
+      "type": "arc",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "color", "field": "id"},
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"}
+        },
+        "update": {
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "innerRadius": {"signal": "innerRadius"},
+          "outerRadius": {"signal": "width / 2"}
+        }
+      }
+    }
+  ],
+  "config": {}
+}
